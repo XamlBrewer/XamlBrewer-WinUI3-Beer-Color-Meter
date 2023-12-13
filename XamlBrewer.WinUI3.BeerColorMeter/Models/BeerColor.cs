@@ -1,0 +1,52 @@
+﻿using System.Linq;
+using Windows.UI;
+
+namespace XamlBrewer.WinUI3.BeerColorMeter.Models
+{
+    public class BeerColor
+    {
+        public double SRM { get; set; }
+
+        public double ECB
+        {
+            get
+            {
+                return 1.97 * this.SRM;
+            }
+        }
+
+        public byte R { get; set; }
+
+        public byte G { get; set; }
+
+        public byte B { get; set; }
+
+        public string ColorName
+        {
+            get
+            {
+                return (from c in DAL.BeerColorGroups
+                        where c.MaximumSRM >= this.SRM
+                        select c.ColorName).FirstOrDefault();
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return new Color() { B = this.B, G = this.G, R = this.R, A = 255 };
+            }
+        }
+
+        public double StartAngle
+        {
+            get { return ((this.SRM - 0.1) * 300.0 / 40.0) - 150; }
+        }
+
+        public double EndAngle
+        {
+            get { return this.StartAngle + 3; }
+        }
+    }
+}

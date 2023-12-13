@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application
+    x:Class="XamlBrewer.WinUI3.BeerColorMeter.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:XamlBrewer.WinUI3.BeerColorMeter">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <!-- Other merged dictionaries here -->
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Other app resources here -->
+            <!-- Custom Accent Colors -->
+            <Color x:Key="SystemAccentColorDark3">#644501</Color>
+            <Color x:Key="SystemAccentColorDark2">#966702</Color>
+            <Color x:Key="SystemAccentColorDark1">#b9623b</Color>
+            <Color x:Key="SystemAccentColor">#c88a03</Color>
+            <Color x:Key="SystemAccentColorLight1">#fccd68</Color>
+            <Color x:Key="SystemAccentColorLight2">#fdde9a</Color>
+            <Color x:Key="SystemAccentColorLight3">#feeecc</Color>
+            <Color x:Key="SystemAccentColorComplementary">#17b1fb</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
