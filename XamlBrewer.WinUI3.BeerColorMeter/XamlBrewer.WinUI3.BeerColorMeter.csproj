@@ -12,6 +12,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Beer.ico" />
     <None Remove="Assets\Beer.jpg" />
   </ItemGroup>
 

@@ -17,7 +17,10 @@ namespace XamlBrewer.WinUI3.BeerColorMeter
     {
         public MainWindow()
         {
-            this.InitializeComponent();
+            Title = "XAML Brewer WinUI 3 Beer Color Meter";
+            InitializeComponent();
+            AppWindow.SetIcon("Assets/Beer.ico");
+
             _ = Load();
         }
 
