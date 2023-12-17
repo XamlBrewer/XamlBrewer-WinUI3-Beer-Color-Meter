@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using Windows.UI;
-
-namespace XamlBrewer.WinUI3.BeerColorMeter.Models
+﻿namespace XamlBrewer.WinUI3.BeerColorMeter.Models
 {
+    using System.Linq;
+    using Windows.UI;
+
     public class BeerColor
     {
         public double SRM { get; set; }
@@ -37,16 +37,6 @@ namespace XamlBrewer.WinUI3.BeerColorMeter.Models
             {
                 return new Color() { B = this.B, G = this.G, R = this.R, A = 255 };
             }
-        }
-
-        public double StartAngle
-        {
-            get { return ((this.SRM - 0.1) * 300.0 / 40.0) - 150; }
-        }
-
-        public double EndAngle
-        {
-            get { return this.StartAngle + 3; }
         }
     }
 }

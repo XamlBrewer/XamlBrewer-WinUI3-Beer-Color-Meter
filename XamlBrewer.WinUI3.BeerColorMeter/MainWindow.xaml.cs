@@ -1,18 +1,19 @@
-using CommunityToolkit.WinUI.Controls;
-using Microsoft.UI;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using System;
-using System.Threading.Tasks;
-using Windows.Graphics.Imaging;
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
-using Windows.UI;
-using XamlBrewer.WinUI3.BeerColorMeter.Models;
-
 namespace XamlBrewer.WinUI3.BeerColorMeter
 {
+    using CommunityToolkit.WinUI.Controls;
+    using Microsoft.UI;
+    using Microsoft.UI.Xaml;
+    using Microsoft.UI.Xaml.Media;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Windows.Graphics.Imaging;
+    using Windows.Storage;
+    using Windows.Storage.Pickers;
+    using Windows.Storage.Streams;
+    using Windows.UI;
+    using XamlBrewer.WinUI3.BeerColorMeter.Models;
+
     public sealed partial class MainWindow : Window
     {
         public MainWindow()
@@ -109,9 +110,23 @@ namespace XamlBrewer.WinUI3.BeerColorMeter
                 }
             }
 
+            DisplayResult(closest);
+        }
+
+        private void BeerColorSlider_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            var closest = DAL.BeerColors.Where(c => c.SRM == e.NewValue).FirstOrDefault();
+            if (closest != null)
+            {
+                DisplayResult(closest);
+            }
+        }
+
+        private void DisplayResult(BeerColor closest)
+        {
             ClosestBeerColor.Background = new SolidColorBrush(Color.FromArgb(255, closest.R, closest.G, closest.B));
             ClosestBeerColorText.Text = $"SRM: {(int)closest.SRM}{Environment.NewLine}ECB: {(int)closest.ECB}{Environment.NewLine}{Environment.NewLine}{closest.ColorName}";
-            if (closest.ECB < 12 )
+            if (closest.ECB < 12)
             {
                 ClosestBeerColorText.Foreground = new SolidColorBrush(Colors.Maroon);
             }
@@ -119,6 +134,10 @@ namespace XamlBrewer.WinUI3.BeerColorMeter
             {
                 ClosestBeerColorText.Foreground = new SolidColorBrush(Colors.Beige);
             }
+
+            BeerColorSlider.Value = closest.SRM;
         }
+
+
     }
 }

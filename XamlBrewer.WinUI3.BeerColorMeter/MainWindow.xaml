@@ -71,12 +71,12 @@
                 Grid.Row="2"
                 Grid.Column="1" />
 
-        <Border x:Name="Result"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                CornerRadius="8"
-                Grid.Row="3"
-                Grid.Column="1">
+        <Grid x:Name="Result"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              CornerRadius="8"
+              Grid.Row="3"
+              Grid.Column="1">
             <Border x:Name="ClosestBeerColor"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
@@ -89,7 +89,14 @@
                            TextWrapping="Wrap"
                            TextAlignment="Center" />
             </Border>
-        </Border>
+            <Slider x:Name="BeerColorSlider"
+                    ValueChanged="BeerColorSlider_ValueChanged"
+                    Minimum="0"
+                    Maximum="40"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Margin="40 0" />
+        </Grid>
 
         <!-- XAML Brewer Logo -->
         <Viewbox StretchDirection="DownOnly"
