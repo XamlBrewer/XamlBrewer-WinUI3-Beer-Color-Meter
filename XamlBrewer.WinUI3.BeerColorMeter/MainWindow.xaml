@@ -61,7 +61,13 @@
                                HorizontalAlignment="Stretch"
                                CornerRadius="8"
                                Grid.Row="1"
-                               Grid.Column="1" />
+                               Grid.Column="1"
+                               Visibility="Visible" />
+        <Image x:Name="FullImage"
+               VerticalAlignment="Stretch"
+               HorizontalAlignment="Stretch"
+               Grid.Row="1"
+               Grid.Column="1" Visibility="Collapsed" />
         <Button Click="CalculateButton_Click"
                 Content="Calculate"
                 HorizontalAlignment="Stretch"

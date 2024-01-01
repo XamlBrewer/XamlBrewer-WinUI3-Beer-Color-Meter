@@ -1,10 +1,12 @@
-namespace XamlBrewer.WinUI3.BeerColorMeter
+﻿namespace XamlBrewer.WinUI3.BeerColorMeter
 {
     using CommunityToolkit.WinUI.Controls;
     using Microsoft.UI;
     using Microsoft.UI.Xaml;
     using Microsoft.UI.Xaml.Media;
+    using Microsoft.UI.Xaml.Media.Imaging;
     using System;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using Windows.Graphics.Imaging;
@@ -22,13 +24,37 @@ namespace XamlBrewer.WinUI3.BeerColorMeter
             InitializeComponent();
             AppWindow.SetIcon("Assets/Beer.ico");
 
+            UseImageCropper = false;
+
             _ = Load();
+        }
+
+        private bool UseImageCropper
+        {
+            get
+            {
+                return ImageCropper.Visibility == Visibility.Visible;
+            }
+
+            set
+            {
+                if (value)
+                {
+                    ImageCropper.Visibility = Visibility.Visible;
+                    FullImage.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    ImageCropper.Visibility = Visibility.Collapsed;
+                    FullImage.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private async Task Load()
         {
             var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Beer.jpg"));
-            await ImageCropper.LoadImageFromFile(file);
+            await OpenFile(file);
         }
 
         private async Task PickImage()
@@ -47,9 +73,21 @@ namespace XamlBrewer.WinUI3.BeerColorMeter
 
             // Open the picker
             var file = await openPicker.PickSingleFileAsync();
+            await OpenFile(file);
+        }
+
+        private async Task OpenFile(StorageFile file)
+        {
             if (file != null)
             {
-                await ImageCropper.LoadImageFromFile(file);
+                if (UseImageCropper)
+                {
+                    await ImageCropper.LoadImageFromFile(file);
+                }
+                else
+                {
+                    FullImage.Source = new BitmapImage(new Uri(file.Path));
+                }
             }
         }
 
@@ -60,19 +98,40 @@ namespace XamlBrewer.WinUI3.BeerColorMeter
 
         private async void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            // Create a .png from the cropped image
-            var stream = new InMemoryRandomAccessStream();
-            await ImageCropper.SaveAsync(stream, BitmapFileFormat.Png);
-            stream.Seek(0);
-            BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
-            stream.Dispose();
+            BitmapDecoder decoder;
+            BitmapTransform transform;
+            if (UseImageCropper)
+            {
+                // Create a .png from the cropped image
+                var stream = new InMemoryRandomAccessStream();
+                await ImageCropper.SaveAsync(stream, BitmapFileFormat.Png);
+                stream.Seek(0);
+                decoder = await BitmapDecoder.CreateAsync(stream);
+                stream.Dispose();
+
+                transform = new()
+                {
+                    ScaledWidth = (uint)ImageCropper.CroppedRegion.Width,
+                    ScaledHeight = (uint)ImageCropper.CroppedRegion.Height
+                };
+            }
+            else
+            {
+                var himage = (BitmapImage)FullImage.Source;
+                var file = await StorageFile.GetFileFromPathAsync(himage.UriSour‌​ce.AbsoluteUri);
+
+                using var stream = await file.OpenStreamForReadAsync();
+                using var ras = stream.AsRandomAccessStream();
+                decoder = await BitmapDecoder.CreateAsync(ras);
+
+                transform = new()
+                {
+                    ScaledWidth = (uint)ImageCropper.ActualWidth,
+                    ScaledHeight = (uint)ImageCropper.ActualHeight
+                };
+            }
 
             // Get the pixels
-            BitmapTransform transform = new()
-            {
-                ScaledWidth = (uint)ImageCropper.CroppedRegion.Width,
-                ScaledHeight = (uint)ImageCropper.CroppedRegion.Height
-            };
             PixelDataProvider pixelData = await decoder.GetPixelDataAsync(
                 BitmapPixelFormat.Rgba8,
                 BitmapAlphaMode.Straight,
