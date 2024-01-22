@@ -24,7 +24,7 @@
             InitializeComponent();
             AppWindow.SetIcon("Assets/Beer.ico");
 
-            UseImageCropper = false;
+            UseImageCropper = true;
 
             _ = Load();
         }
@@ -67,6 +67,7 @@
             // Set options
             openPicker.ViewMode = PickerViewMode.Thumbnail;
             openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".bmp");
             openPicker.FileTypeFilter.Add(".jpg");
             openPicker.FileTypeFilter.Add(".jpeg");
             openPicker.FileTypeFilter.Add(".png");
@@ -196,7 +197,5 @@
 
             BeerColorSlider.Value = closest.SRM;
         }
-
-
     }
 }
