@@ -1,6 +1,6 @@
 # XAML Brewer WinUI 3 Beer Color Meter
 
-A reference app that allows you to pick an image and select a part of it. It then calculates the average color of the selected area's pixels, and finds the nearest official beer color in SRM and ECB.
+A reference app that allows you to pick an image and select a part of it. It then calculates the average color of the selected area's pixels, and finds the nearest official beer color in Standard Reference Method (SRM) and European Brewery Convention (EBC) units.
 
 Just for fun.
 
