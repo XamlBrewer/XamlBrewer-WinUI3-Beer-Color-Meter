@@ -185,8 +185,8 @@
         private void DisplayResult(BeerColor closest)
         {
             ClosestBeerColor.Background = new SolidColorBrush(Color.FromArgb(255, closest.R, closest.G, closest.B));
-            ClosestBeerColorText.Text = $"SRM: {(int)closest.SRM}{Environment.NewLine}ECB: {(int)closest.ECB}{Environment.NewLine}{Environment.NewLine}{closest.ColorName}";
-            if (closest.ECB < 12)
+            ClosestBeerColorText.Text = $"SRM: {(int)closest.SRM}{Environment.NewLine}EBC: {(int)closest.EBC}{Environment.NewLine}{Environment.NewLine}{closest.ColorName}";
+            if (closest.EBC < 12)
             {
                 ClosestBeerColorText.Foreground = new SolidColorBrush(Colors.Maroon);
             }
