@@ -67,7 +67,8 @@
                VerticalAlignment="Stretch"
                HorizontalAlignment="Stretch"
                Grid.Row="1"
-               Grid.Column="1" Visibility="Collapsed" />
+               Grid.Column="1"
+               Visibility="Collapsed" />
         <Button Click="CalculateButton_Click"
                 Content="Calculate"
                 HorizontalAlignment="Stretch"
@@ -111,7 +112,7 @@
                  Width="142"
                  Margin="8"
                  Grid.RowSpan="5"
-                 Grid.ColumnSpan="3">
+                 Grid.ColumnSpan="4">
             <Canvas Height="80"
                     Width="200"
                     Background="Transparent">
@@ -148,5 +149,14 @@
                 </Grid>
             </Canvas>
         </Viewbox>
+
+        <!-- WinUI Logo -->
+        <Image Source="/Assets/WinUILogo.png"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom"
+               Width="80"
+               Margin="8"
+               Grid.RowSpan="5"
+               Grid.ColumnSpan="4" />
     </Grid>
 </Window>
