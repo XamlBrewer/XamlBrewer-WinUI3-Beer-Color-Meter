@@ -127,8 +127,8 @@
 
                 transform = new()
                 {
-                    ScaledWidth = (uint)ImageCropper.ActualWidth,
-                    ScaledHeight = (uint)ImageCropper.ActualHeight
+                    ScaledWidth = (uint)FullImage.ActualWidth,
+                    ScaledHeight = (uint)FullImage.ActualHeight
                 };
             }
 
@@ -161,8 +161,8 @@
             foreach (var beerColor in DAL.BeerColors)
             {
                 double d = Math.Sqrt(Math.Pow(beerColor.B - color.B, 2)
-                                   + Math.Pow(beerColor.G - color.G, 2)
-                                   + Math.Pow(beerColor.R - color.R, 2));
+                                    + Math.Pow(beerColor.G - color.G, 2)
+                                    + Math.Pow(beerColor.R - color.R, 2));
                 if (d < distance)
                 {
                     distance = d;
